@@ -8,6 +8,7 @@ import HomeScreen from "./screens/HomeScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import CharacterDetailsScreen from "./screens/CharacterDetailsScreen";
 import { GlobalStyles } from "./styles/theme";
+import { FavoritesContextProvider } from "./contexts/FavoriteContext";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -20,7 +21,7 @@ const BottomTabsNavigation = () => {
 				headerTintColor: GlobalStyles.colors.accent500,
 				tabBarStyle: { backgroundColor: GlobalStyles.colors.primary700 },
 				tabBarActiveTintColor: GlobalStyles.colors.accent500,
-        tabBarInactiveTintColor: GlobalStyles.colors.white,
+				tabBarInactiveTintColor: GlobalStyles.colors.white,
 			})}
 		>
 			<BottomTabs.Screen
@@ -53,24 +54,26 @@ export default function App() {
 	return (
 		<>
 			<StatusBar style="light" />
-			<NavigationContainer>
-				<Stack.Navigator
-					screenOptions={{
-						headerStyle: { backgroundColor: GlobalStyles.colors.primary700 },
-						headerTintColor: GlobalStyles.colors.accent500,
-					}}
-				>
-					<Stack.Screen
-						name="BottomTabsNavigation"
-						component={BottomTabsNavigation}
-						options={{ headerShown: false }}
-					/>
-					<Stack.Screen
-						name="CharacterDetails"
-						component={CharacterDetailsScreen}
-					/>
-				</Stack.Navigator>
-			</NavigationContainer>
+			<FavoritesContextProvider>
+				<NavigationContainer>
+					<Stack.Navigator
+						screenOptions={{
+							headerStyle: { backgroundColor: GlobalStyles.colors.primary700 },
+							headerTintColor: GlobalStyles.colors.accent500,
+						}}
+					>
+						<Stack.Screen
+							name="BottomTabsNavigation"
+							component={BottomTabsNavigation}
+							options={{ headerShown: false }}
+						/>
+						<Stack.Screen
+							name="CharacterDetails"
+							component={CharacterDetailsScreen}
+						/>
+					</Stack.Navigator>
+				</NavigationContainer>
+			</FavoritesContextProvider>
 		</>
 	);
 }

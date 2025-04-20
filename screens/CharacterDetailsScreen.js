@@ -3,9 +3,21 @@ import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../styles/theme";
 import { Image, ScrollView, StyleSheet, Text } from "react-native";
 import { getThumbnail } from "../utils/helpers";
+import { useFavorites } from "../contexts/FavoriteContext";
 
 const CharacterDetailsScreen = ({ route, navigation }) => {
 	const character = route.params.character;
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+
+  const favoriteHandler = () => {
+    const { id, name, description, thumbnail } = character;
+
+		if (isFavorite(id)) {
+			removeFavorite(id);
+		} else {
+			addFavorite({ id, name, description, thumbnail });
+		}
+	};
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
@@ -13,18 +25,18 @@ const CharacterDetailsScreen = ({ route, navigation }) => {
 			headerRight: () => (
 				<IconButton
 					title="Favorite"
-					icon="favorite-outline"
+					icon={isFavorite(character.id) ? "favorite" : "favorite-outline"}
           size={24}
 					color={GlobalStyles.colors.white}
-					onClick={() => console.log("Favoritado")}
+					onClick={favoriteHandler}
 				/>
 			),
 		});
-	}, [navigation, character]);
+	}, [navigation, character, isFavorite]);
 
   return (
     <ScrollView style={styles.container}>
-      <Image source={{ uri: getThumbnail(character) }} style={styles.image} />
+      <Image source={{ uri: getThumbnail(character.thumbnail) }} style={styles.image} />
       <Text style={styles.title}>{character.name}</Text>
       <Text style={styles.description}>{character.description}</Text>
     </ScrollView>

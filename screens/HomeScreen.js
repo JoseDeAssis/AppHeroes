@@ -5,7 +5,7 @@ import {
 } from "../services/marvelService";
 import CharacterList from "../components/Character/CharacterList";
 import SearchBar from "../components/UI/SearchBar";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import useDebounce from "../hooks/useDebounce";
 
 const HomeScreen = () => {
@@ -21,7 +21,6 @@ const HomeScreen = () => {
 		if (isLoading || !hasMore) return;
 
 		setIsLoading(true);
-		console.log("here")
 		try {
 			const loadCharacters =
 				debouncedSearch.trim().length === 0
@@ -67,7 +66,7 @@ const HomeScreen = () => {
 	};
 
 	return (
-		<View style={{flex: 1, paddingBottom: 65}}>
+		<View style={styles.container}>
 			<SearchBar onSearch={searchHandler} onCancel={cancelHandler} />
 			<CharacterList
 				charactersList={charactersList}
@@ -78,5 +77,12 @@ const HomeScreen = () => {
 		</View>
 	);
 };
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		paddingBottom: 65
+	}
+})
 
 export default HomeScreen;
