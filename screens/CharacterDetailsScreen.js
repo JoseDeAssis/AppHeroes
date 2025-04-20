@@ -34,7 +34,7 @@ const CharacterDetailsScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: GlobalStyles.colors.gray500
+    backgroundColor: GlobalStyles.colors.gray700
   },
   image: {
     width: "100%",

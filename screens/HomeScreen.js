@@ -1,12 +1,82 @@
-import { useEffect, useState } from "react";
-import { FlatList, Text } from "react-native";
-import { getCharacters } from "../services/marvelService";
+import { useCallback, useEffect, useState } from "react";
+import {
+	getCharacters,
+	getCharactersNameStartsWith,
+} from "../services/marvelService";
 import CharacterList from "../components/Character/CharacterList";
-import LoadingOverlay from "../components/UI/LoadingOverlay";
+import SearchBar from "../components/UI/SearchBar";
+import { View } from "react-native";
+import useDebounce from "../hooks/useDebounce";
 
 const HomeScreen = () => {
+	const [charactersList, setCharactersList] = useState([]);
+	const [search, setSearch] = useState("");
+	const debouncedSearch = useDebounce(search);
+	const [offset, setOffset] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
+	const [hasMore, setHasMore] = useState(true);
+	const [error, setError] = useState();
 
-	return <CharacterList />;
+	const loadMoreCharacters = useCallback(async () => {
+		if (isLoading || !hasMore) return;
+
+		setIsLoading(true);
+		console.log("here")
+		try {
+			const loadCharacters =
+				debouncedSearch.trim().length === 0
+					? await getCharacters(offset)
+					: await getCharactersNameStartsWith(debouncedSearch, offset);
+
+			if (loadCharacters.length === 0) {
+				setHasMore(false);
+				return;
+			}
+			
+			setCharactersList((prevCharacterList) => {
+				const existingIds = prevCharacterList.map((character) => character.id);
+				const newCharacters = loadCharacters.filter(
+					(character) => !existingIds.includes(character.id)
+				);
+				return [...prevCharacterList, ...newCharacters];
+			});
+			setOffset((prevOffset) => prevOffset + loadCharacters.length);
+		} catch (error) {
+			setError(error);
+		} finally {
+			setIsLoading(false);
+		}
+	}, [isLoading, offset, hasMore, debouncedSearch]);
+
+	useEffect(() => {
+		setCharactersList([]);
+		setHasMore(true);
+		setError(null);
+		loadMoreCharacters();
+	}, [debouncedSearch]);
+
+	const searchHandler = (text) => {
+		setSearch(text);
+		setOffset(0)
+	};
+
+	const cancelHandler = () => {
+		setSearch("");
+		setHasMore(true);
+		setOffset(0);
+	};
+
+	return (
+		<View style={{flex: 1, paddingBottom: 65}}>
+			<SearchBar onSearch={searchHandler} onCancel={cancelHandler} />
+			<CharacterList
+				charactersList={charactersList}
+				loadMoreCharacters={loadMoreCharacters}
+				isLoading={isLoading}
+				hasMore={hasMore}
+			/>
+		</View>
+	);
 };
 
 export default HomeScreen;

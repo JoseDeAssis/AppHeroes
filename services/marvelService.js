@@ -9,19 +9,32 @@ const message = TS + PRIVATE_KEY + PUBLIC_KEY;
 const HASH = CryptoJS.MD5(message).toString();
 
 const buildAuthParams = () => ({
-  ts: TS,
-  apikey: PUBLIC_KEY,
-  hash: HASH
+	ts: TS,
+	apikey: PUBLIC_KEY,
+	hash: HASH,
 });
 
-export const getCharacters = async (offset) => {
-  const response = await api.get('/characters', {
-    params: {
-      ...buildAuthParams(),
-      limit: 20,
-      offset
-    }
-  });
+export const getCharacters = async (offset = 0) => {
+	const response = await api.get("/characters", {
+		params: {
+			...buildAuthParams(),
+			limit: 20,
+			offset,
+		},
+	});
 
-  return response.data.data.results;
-}
+	return response.data.data.results;
+};
+
+export const getCharactersNameStartsWith = async (search, offset = 0) => {
+	const response = await api.get("/characters", {
+		params: {
+			...buildAuthParams(),
+			nameStartsWith: search,
+			limit: 20,
+			offset,
+		},
+	});
+
+	return response.data.data.results;
+};
