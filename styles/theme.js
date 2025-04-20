@@ -9,6 +9,8 @@ export const GlobalStyles = {
 		black: "#000000",
 		error50: "#fcc4e4",
 		error500: "#9b095c",
-		gray500: "	#504a4a",
+    gray100: "#C9CAD1",
+		gray500: "#504a4a",
+    bluegray100: "#B0C4DE"
 	},
 };

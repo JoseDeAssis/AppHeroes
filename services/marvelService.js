@@ -14,7 +14,7 @@ const buildAuthParams = () => ({
   hash: HASH
 });
 
-export const getCharacters = async (offset = 0) => {
+export const getCharacters = async (offset) => {
   const response = await api.get('/characters', {
     params: {
       ...buildAuthParams(),

@@ -16,11 +16,11 @@ const BottomTabsNavigation = () => {
 	return (
 		<BottomTabs.Navigator
 			screenOptions={({ navigation }) => ({
-				headerStyle: { backgroundColor: GlobalStyles.colors.primary300 },
-				headerTintColor: GlobalStyles.colors.accent100,
-				tabBarStyle: { backgroundColor: GlobalStyles.colors.primary300 },
-				tabBarActiveTintColor: GlobalStyles.colors.accent100,
-        tabBarInactiveTintColor: GlobalStyles.colors.white
+				headerStyle: { backgroundColor: GlobalStyles.colors.primary700 },
+				headerTintColor: GlobalStyles.colors.accent500,
+				tabBarStyle: { backgroundColor: GlobalStyles.colors.primary700 },
+				tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        tabBarInactiveTintColor: GlobalStyles.colors.white,
 			})}
 		>
 			<BottomTabs.Screen
@@ -39,7 +39,7 @@ const BottomTabsNavigation = () => {
 				component={FavoritesScreen}
 				options={{
 					title: "Favorites",
-					tabBarLabel: "Favarites",
+					tabBarLabel: "Favorites",
 					tabBarIcon: ({ color, size }) => (
 						<MaterialIcons name="favorite" size={size} color={color} />
 					),
@@ -56,8 +56,8 @@ export default function App() {
 			<NavigationContainer>
 				<Stack.Navigator
 					screenOptions={{
-						headerStyle: { backgroundColor: "#ccc" },
-						headerTintColor: "#fff",
+						headerStyle: { backgroundColor: GlobalStyles.colors.primary700 },
+						headerTintColor: GlobalStyles.colors.accent500,
 					}}
 				>
 					<Stack.Screen

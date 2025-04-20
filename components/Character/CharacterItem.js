@@ -9,14 +9,15 @@ import {
 import IconButton from "../UI/IconButton";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
+import { getThumbnail } from "../../utils/helpers";
 
-const CharacterItem = ({ id, name, thumbnail }) => {
+const CharacterItem = ({ character }) => {
 	const navigation = useNavigation();
 	const [isFavorite, setIsFavorite] = useState(false);
 
 	const characterPressHandler = () => {
 		navigation.navigate("CharacterDetails", {
-			characterId: id,
+			character: character,
 		});
 	};
 
@@ -32,8 +33,8 @@ const CharacterItem = ({ id, name, thumbnail }) => {
 				android_ripple={{ color: "#ccc" }}
 			>
 				<View style={styles.characterItem}>
-					<Image source={{ uri: thumbnail }} style={styles.avatar} />
-					<Text style={styles.text}>{name}</Text>
+					<Image source={{ uri: getThumbnail(character) }} style={styles.avatar} />
+					<Text style={styles.text}>{character.name}</Text>
 					<View style={styles.iconButtonContainer}>
 						<IconButton
 							icon={isFavorite ? "favorite" : "favorite-outline"}
@@ -57,8 +58,8 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-    borderColor: "black",
-    borderWidth: 1
+		borderColor: "black",
+		borderWidth: 1,
 	},
 	characterItem: {
 		flexDirection: "row",
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
 			},
 			android: {
 				elevation: 4,
-        overflow: "hidden"
+				overflow: "hidden",
 			},
 		}),
 	},
