@@ -7,6 +7,7 @@ import CharacterList from "../components/Character/CharacterList";
 import SearchBar from "../components/UI/SearchBar";
 import { StyleSheet, View } from "react-native";
 import useDebounce from "../hooks/useDebounce";
+import ErrorScreen from "../components/UI/ErrorScreen";
 
 const HomeScreen = () => {
 	const [charactersList, setCharactersList] = useState([]);
@@ -21,6 +22,8 @@ const HomeScreen = () => {
 		if (isLoading || !hasMore) return;
 
 		setIsLoading(true);
+		setError(null);
+		
 		try {
 			const loadCharacters =
 				debouncedSearch.trim().length === 0
@@ -31,7 +34,7 @@ const HomeScreen = () => {
 				setHasMore(false);
 				return;
 			}
-			
+
 			setCharactersList((prevCharacterList) => {
 				const existingIds = prevCharacterList.map((character) => character.id);
 				const newCharacters = loadCharacters.filter(
@@ -56,7 +59,7 @@ const HomeScreen = () => {
 
 	const searchHandler = (text) => {
 		setSearch(text);
-		setOffset(0)
+		setOffset(0);
 	};
 
 	const cancelHandler = () => {
@@ -64,6 +67,8 @@ const HomeScreen = () => {
 		setHasMore(true);
 		setOffset(0);
 	};
+
+	if (error) return <ErrorScreen error={error} onRetry={loadMoreCharacters} />;
 
 	return (
 		<View style={styles.container}>
@@ -81,8 +86,8 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingBottom: 65
-	}
-})
+		paddingBottom: 65,
+	},
+});
 
 export default HomeScreen;

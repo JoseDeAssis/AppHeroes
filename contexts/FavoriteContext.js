@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useContext, useEffect, useState } from "react";
+import { Alert } from "react-native";
 
 export const FavoritesContext = createContext();
 
@@ -14,6 +15,7 @@ export const FavoritesContextProvider = ({ children }) => {
 				);
 				if (storedFavorites) setFavorites(JSON.parse(storedFavorites));
 			} catch (error) {
+				Alert.alert("Loading Error", "Failed to load favorite characters. Try again later!");
 				console.log(error);
 			}
 		};
@@ -29,6 +31,7 @@ export const FavoritesContextProvider = ({ children }) => {
 					JSON.stringify(favorites)
 				);
 			} catch (error) {
+				Alert.alert("Save Error", "Failed to save favorite character. Try again later!");
 				console.log(error);
 			}
 		};

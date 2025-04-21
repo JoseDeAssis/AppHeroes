@@ -10,6 +10,7 @@ import IconButton from "../UI/IconButton";
 import { useNavigation } from "@react-navigation/native";
 import { getThumbnail } from "../../utils/helpers";
 import { useFavorites } from "../../contexts/FavoriteContext";
+import { GlobalStyles } from "../../styles/theme";
 
 const CharacterItem = ({ id, name, description, thumbnail }) => {
 	const navigation = useNavigation();
@@ -34,7 +35,7 @@ const CharacterItem = ({ id, name, description, thumbnail }) => {
 			<Pressable
 				style={({ pressed }) => pressed && styles.pressed}
 				onPress={characterPressHandler}
-				android_ripple={{ color: "#ccc" }}
+				android_ripple={{ color: GlobalStyles.colors.gray500 }}
 			>
 				<View style={styles.characterItem}>
 					<Image source={{ uri: getThumbnail(thumbnail) }} style={styles.avatar} />
@@ -55,14 +56,14 @@ const CharacterItem = ({ id, name, description, thumbnail }) => {
 
 const styles = StyleSheet.create({
 	outerContainer: {
-		backgroundColor: "#ccc",
+		backgroundColor: GlobalStyles.colors.gray500,
 		padding: 4,
 	},
 	avatar: {
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-		borderColor: "black",
+		borderColor: GlobalStyles.colors.black,
 		borderWidth: 1,
 	},
 	characterItem: {
@@ -70,12 +71,12 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 		padding: 16,
-		backgroundColor: "white",
+		backgroundColor: GlobalStyles.colors.white,
 		borderRadius: 8,
 		elevation: 4,
 		...Platform.select({
 			ios: {
-				shadowColor: "black",
+				shadowColor: GlobalStyles.colors.black,
 				shadowOpacity: 0.25,
 				shadowOffset: { width: 0, height: 2 },
 				shadowRadius: 8,
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
 	},
 	pressed: {
 		opacity: 0.75,
-		backgroundColor: "#f0f0f0",
+		backgroundColor: GlobalStyles.colors.gray100
 	},
 });
 

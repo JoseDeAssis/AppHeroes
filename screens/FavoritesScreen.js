@@ -44,6 +44,7 @@ const FavoritesScreen = () => {
 				"Share failed",
 				"Failed to share your characters, try again later!"
 			);
+			console.log(error);
 		} finally {
       setIsSharing(false);
     }

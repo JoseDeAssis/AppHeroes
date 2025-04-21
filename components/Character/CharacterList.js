@@ -32,6 +32,7 @@ const CharacterList = ({
 				onEndReached={loadMoreCharacters}
 				onEndReachedThreshold={0.3}
 				ListFooterComponent={isLoading && hasMore && <LoadingOverlay />}
+				keyboardDismissMode="on-drag"
 			/>
 		</View>
 	);
