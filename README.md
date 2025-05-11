@@ -1,4 +1,4 @@
-# CaseMeliuz - Marvel Character App
+# Marvel Character App
 
 ## Visão Geral do Projeto
 Aplicativo feito em React Native para listagem de personagens da Marvel com funcionalidades de busca, favoritos e compartilhamento. O App consome consome a Api Marvel disponibilizada pela coleção feita pelo Alex Lifa(https://www.postman.com/alex-postman-workspace/marvel-api-workspace/documentation/989e351/marvel-api), pois não consegui acessar a API oficial da Marvel, já que a mesma estava apresentando erros internos de servidor.
